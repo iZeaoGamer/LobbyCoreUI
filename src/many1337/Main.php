@@ -44,33 +44,6 @@ class Main extends PluginBase implements Listener
             $this->getServer()->getPluginManager()->disablePlugin($this);
         }
     }
-
-    public function onDisable()
-    {
-        foreach ($this->getServer()->getOnlinePlayers() as $p) {
-            $p->transfer("80.99.208.62", "1941");
-        }
-    }
-
-    public function onJoin(PlayerJoinEvent $event)
-    {
-
-        $player = $event->getPlayer();
-        $name = $player->getName();
-        $this->Main($player);
-        $event->setJoinMessage("§7[§9+§7] §9" . $name);
-
-    }
-
-    public function onQuit(PlayerQuitEvent $event)
-    {
-
-        $player = $event->getPlayer();
-        $name = $player->getName();
-        $event->setQuitMessage("§7[§c-§7] §c" . $name);
-
-    }
-
     public function onPlace(BlockPlaceEvent $ev)
     {
 		$ev->setCancelled(true);
@@ -94,7 +67,6 @@ class Main extends PluginBase implements Listener
     public function Main(Player $player)
     {
         $player->getInventory()->clearAll();
-        $player->getInventory()->setItem(4, Item::get(345)->setCustomName(TextFormat::YELLOW . "Navigator"));
         $player->getInventory()->setItem(0, Item::get(397, 3)->setCustomName(TextFormat::AQUA . "Profile"));
         $player->getInventory()->setItem(8, Item::get(399)->setCustomName(TextFormat::GREEN . "Info"));
         $player->getInventory()->setItem(6, Item::get(288)->setCustomName(TextFormat::BLUE . "Fly"));
@@ -105,9 +77,10 @@ class Main extends PluginBase implements Listener
     public function onInteract(PlayerInteractEvent $event)
     {
         $player = $event->getPlayer();
+	    $name = $event->getPlayer()->getName();
         $item = $player->getInventory()->getItemInHand();
         $cfg = new Config($this->getDataFolder() . "config.yml", Config::YAML);
-        $game1 = $cfg->get("Game-1-Name");
+       /* $game1 = $cfg->get("Game-1-Name");
         $game2 = $cfg->get("Game-2-Name");
         $game3 = $cfg->get("Game-3-Name");
         $game4 = $cfg->get("Game-4-Name");
@@ -161,10 +134,10 @@ class Main extends PluginBase implements Listener
             $form->sendToPlayer($player);
 
         }
-
+*/
         if ($item->getCustomName() == TextFormat::AQUA . "Profile") {
 
-            $this->getServer()->dispatchCommand($event->getPlayer(), "profil " . $player);
+            $this->getServer()->dispatchCommand($event->getPlayer(), "profile " . $name);
         }
 
         if ($item->getCustomName() == TextFormat::GREEN . "Info") {
@@ -193,11 +166,11 @@ class Main extends PluginBase implements Listener
                         $sender->sendMessage("§4FlyUI has been closed.");
                 }
             });
-            $form->setTitle("§6Fly Mode");
-            $form->setContent("§b§oOn or Off your fly§r");
+            $form->setTitle("§5Fly Mode");
+            $form->setContent("§aOn or §cOff §byour fly§r");
             $form->addbutton("§l§aON", 0);
             $form->addbutton("§l§cOFF", 1);
-            $form->addButton("§lEXIT", 2);
+            $form->addButton("§4§lEXIT", 2);
             $form->sendToPlayer($player);
         }
 
