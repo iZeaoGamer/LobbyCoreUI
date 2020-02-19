@@ -24,7 +24,7 @@ class GuardianTask extends Task {
 	
 	public function onRun(int $currentTick){
 		$pk = new LevelEventPacket();
-		$pk->evid = LevelEventPacket::EVENT_GUARDIAN_CURSE;
+		$pk->evid = LevelEventPacket::EVENT_SOUND_TOTEM;
 		$pk->data = 0;
 		$pk->position = $this->player->asVector3();
 		$this->player->dataPacket($pk);
